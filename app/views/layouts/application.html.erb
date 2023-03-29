@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>PhotoBook</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags  %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- My css-->
+    <%
+=begin%>
+ <% stylesheet_link_tag "style" %> 
+<%
+=end%>
+  </head>
+  
+  <body>
+     <%= render "layouts/navbar" %>
+     <%= render "layouts/option" %>
+     <p class="notice"><% notice %></p>
+     <p class="alert"><% alert %></p>
+     <%= yield %>
+     <%= render "layouts/footer" %>
+      
+    <!-- Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
+
+    <script>
+    // validate form
+      function validateForm(name_form)
+      {
+        if(name_form)
+        { 
+          var id_form ="#my-"+name_form
+          switch(name_form) {
+            case "login":
+              $(id_form).validate({
+                  rules: {
+                     "user[email]": {
+                      required: true,
+                      minlength: 11,
+                      maxlength: 255,
+                      email: true
+                    },
+                     "user[password]": {
+                      required: true,
+                      minlength: 1,
+                      maxlength: 64
+                    }
+                  }
+              });
+              break;
+            case "signup":
+              $(`${id_form}`).validate({
+                rules: {
+                   "user[first_name]": {
+                      required: true,
+                      minlength: 3,
+                      maxlength: 25
+                  },
+                   "user[last_name]": {
+                      required: true,
+                      minlength: 1,
+                      maxlength: 25
+                  },
+                   "user[email]": {
+                      required: true,
+                      minlength: 11,
+                      maxlength: 255,
+                      email: true
+                  },
+                   "user[password]": {
+                      required: true,
+                      minlength: 1,
+                      maxlength: 64
+                  },
+                   "user[confirm_password]": {
+                      required: true,
+                      minlength: 1,
+                      maxlength: 64,
+                      equalTo: ".center-form-sign-up .password"
+                  },
+                }
+              });
+            
+              break;
+            case "forgot":
+              $(id_form).validate({
+                rules: {
+                   "user[email]": {
+                      required: true,
+                      minlength: 11,
+                      maxlength: 255,
+                      email: true
+                  }
+                }
+              });
+              break;
+            default:
+              console.log("Not found")
+          }
+
+
+        }
+      }
+    // upload image file
+      function uploadImage() {
+        let count = 0
+        let button = $('.images .pic')
+        let uploader = $('<input type="file" name="photo[file]"  accept="image/png" />')
+        //  var uploader =$('#photo_file')
+        let images = $('.images')
+        let form_photo = $("#form-add-photos") 
+        let form_album = $("#form-add-albums") 
+
+        button.on('click', function () {
+          uploader.click()
+        })
+        
+        uploader.on('change', function () {
+            var reader = new FileReader()
+            reader.onload = function(event) {
+              if(images.hasClass('one-photo') && !images.hasClass('img') && count < 1)
+              {
+                images.prepend('<div type="file" name="photo[file]" class="img" style="background-image: url(\'' + event.target.result + '\');" ><span>remove</span></div>')
+                $('.images .pic').css('display','none')
+                count+=1;
+              }
+              else if(images.hasClass('one-album'))
+              {
+                images.prepend('<div class="img" style="background-image: url(\'' + event.target.result + '\');" rel="'+ event.target.result  +'"><span>remove</span></div>')
+                 $('.images .pic').css('display','none')
+              }
+          
+            }
+          reader.readAsDataURL(uploader[0].files[0])
+          uploader.attr({id: "file_one" ,style: 'display: none'}).appendTo(form_photo);
+          uploader.attr({id: "file_multi" ,style: 'display: none'}).appendTo(form_album);
+        })
+        
+        images.on('click', '.img', function () {
+          if(images.hasClass('one-photo'))
+          {
+            count=0;
+            $('.images .pic').css('display','block')
+            $("#file_one").css('display','none')
+          }
+          $(this).remove()
+          
+        })
+      
+      }
+
+    // handle click photo modal
+      function showModalPhoto(id_modal){
+        let id = $(id_modal).attr("id").split("-")[1]
+        let div = $('.modal-photo #modal-photo-dialog')
+        let html = ''
+      
+        $.ajax({
+            method: "GET",
+            url: `http://localhost:3000/photos/${id}`,
+            cache: false,
+            success: function (responseText) {
+              let data = responseText
+             
+              let img = data.image.url.split('/').pop()
+              html= `
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <h4 class="modal-title" id="myModalPhotoLabel">${data.title}</h4>
+                        </div>
+                        <div class="modal-body">
+                          <div class="photo-modal-img">
+                            <img src="assets/${img}" class: "d-block w-100">
+                          </div>
+                          
+                        </div>
+                        <div class="modal-footer">
+                          <p class="content-modal-photo">${data.desc}</p>
+                        </div>
+                      </div>
+              `
+              div.append(html)
+            }
+        })
+        
+      }
+
+      function removeContentModal(id_modal)
+      {
+         if ($(".modal-content"))
+         {
+            $(".modal-photo .modal-content").remove();
+         }
+         
+      }
+
+      // handle click album modal
+      function showModalAlbum(id_modal){
+        let id = $(id_modal).attr("id").split("-")[1]
+        let div = $('.modal-album #modal-photo-dialog')
+        let html = ''
+      
+       
+      }
+
+
+      var signup_form = $("#my-signup").attr('name')
+      var login_form = $("#my-login").attr('name')
+      var forgot_form = $("#my-forgot").attr('name')
+      validateForm(signup_form)
+      validateForm(login_form)
+      validateForm(forgot_form)
+
+      uploadImage();  
+    </script>
+  </body>
+</html>

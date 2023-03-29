@@ -1,0 +1,25 @@
+<div class="container-index my-photos">
+  <h4>New Album</h4>
+  <hr>
+  <%= form_with url: albums_path, method: :post,multipart: true,html: {id: "form-add-albums"} do |form| %>
+    <div class="row new-photo" >
+        <div class="col-md-6">
+          <%= form.label :title, "Title" %>
+          <%= text_field(:album, :title, class: "form-control",placeholder: "Album title",autofocus: true )  %>
+          <%= form.label :state,"Sharing mode" %>
+          <%= form.select :state, ["public", "private"],{},{class: "form-control"} %>
+
+          <div class="images one-album">
+            <div class="pic">
+              <i class="fa-solid fa-plus"></i>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <%= form.label :desc, "Description" %>
+          <%= text_area :album,:desc, size: "55x3",class: "form-control" %>
+        </div>
+    </div>
+  <%= form.submit "Save", class: "btn btn-success ml-4" %>
+  <% end %>
+</div>

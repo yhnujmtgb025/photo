@@ -1,0 +1,34 @@
+<div class="container-index my-photos">
+  <div class="btn-add-photo">
+    <button type="button" class="btn btn-success">
+     <%=link_to "Add new album", new_album_path %>
+    </button>
+  </div>
+  <hr>
+
+  <div class="row">
+    <%if @albums %>
+      <% @albums.each do |p|%>
+        <div class="col-sm-6 com-md-6 col-lg-3 ">
+          <div class="attach-icon">
+            <%=link_to edit_album_path(1) do%>
+              <div class="box-edit-album">
+                  <p> <%= p.title%></p>
+                  <i class="fa-solid fa-pen-to-square"></i>
+              </div>
+            <%end%>
+          <div class="frame-include-photo">
+            <%= image_tag("#{p.avatar.identifier}", id: "album-#{p.id}",class: "z-img-1",onclick: "showModalAlbum(this)",data: {toggle:"modal", target:"#myModalAlbum"}) %>
+
+    
+          </div>
+          <i class="fa-solid fa-lock"></i>
+        </div>
+      <%end%>
+    <%end%>
+  </div>
+
+
+
+  </div>
+</div>

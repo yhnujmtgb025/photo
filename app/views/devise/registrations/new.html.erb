@@ -1,0 +1,56 @@
+<div class="container">
+  <div class="row ">
+    <div class="col-sm-6 col-md-4 col-md-offset-4 col-md-5 center-form-sign-up">
+      <h2 class="text-center">FotoBook Signup</h2>
+      <div class="account-wall">
+        <%= form_for(resource, as: resource_name, url: user_registration_path, html: {class: "form-signin", id: "my-signup", name: "signup"} ) do |f| %>
+          
+          <div class="field">
+              <p class="notice text-center text-danger"><%= flash[:error] %></p>
+          </div>
+
+          <%= render "devise/shared/error_messages", resource: resource %>
+
+          <div class="field">
+            <%= f.text_field :active, value: "true",type: "hidden", class: "form-control"%>
+            <%= f.text_field :role, value: "0",type: "hidden",class: "form-control"%>
+          </div>
+          
+          <div class="field">
+            <%= f.label :first_name %><br />
+            <%= f.text_field :first_name,class: "form-control", placeholder: "First name" %>
+          </div>
+
+          <div class="field">
+            <%= f.label :last_name %><br/>
+            <%= f.text_field :last_name,class: "form-control",placeholder: "Last name" %>
+          </div>
+          
+          <div class="field">
+            <%= f.label :email %><br />
+            <%= f.email_field :email,class: "form-control",placeholder: "Email",autocomplete: "email" %>
+          </div>
+
+          <div class="field">
+            <%= f.label :password %>
+            <%= f.password_field :password, placeholder: "Password" ,class: "form-control password" %>
+          </div>
+
+          <div class="field">
+            <%= f.label :password_confirmation %><br />
+            <%= f.password_field :password_confirmation, placeholder: "Password confirmation",class: "form-control"%>
+          </div>
+
+    
+          <div class="actions">
+            <%= f.submit "Sign up", class: "btn btn-lg btn-primary btn-block" %>
+          </div>
+          
+          <div class="mid-login-signup ">
+            <%= render "devise/shared/links" %>
+          </div>
+        <% end %>
+      </div>      
+    </div>
+  <div>
+</div>

@@ -1,0 +1,25 @@
+<div class="container">
+  <div class="row ">
+    <div class="col-md-6 col-md-offset-6 col-xl-4 center-form-log-in">
+      <h2 class="text-center" >Forgot password?</h2>
+        <div class="account-wall">
+            <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, class: 'form-signin', id: "my-forgot", name: "forgot" }) do |f| %>
+              <%= render "devise/shared/error_messages", class: "form-control",resource: resource %>
+
+              <div class="field">
+                <%= f.label :email %><br />
+                <%= f.email_field :email, name: "email",class: "form-control",placeholder: "Email",autofocus: true, autocomplete: "email" %>
+              </div>
+
+              <div class="actions">
+                <%= f.submit "Reset password",class: 'btn btn-lg btn-primary btn-block mt-2' %>
+              </div>
+               
+              <div class="forgot-login-left" >
+                <%= render "devise/shared/links" %>
+              </div> 
+            <% end %>
+      </div>
+    </div>
+  </div>
+</div>

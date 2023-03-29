@@ -1,0 +1,32 @@
+<div class="container-index my-photos">
+  <h4>Edit album</h4>
+  <hr>
+  <%= form_with url: "", method: :patch,multipart: true do |form| %>
+    <div class="row new-photo" >
+        <div class="col-md-6">
+          <%= form.label :title, "Title" %>
+          <%= text_field(:album, :title, class: "form-control",placeholder: "Album title",autofocus: true )  %>
+          <%= form.label :state,"Sharing mode" %>
+          <select name="album[:state]" class="form-control">
+              <option value="public">public</option>
+              <option value="private">private</option>
+          </select>
+          <%= form.file_field :picture %>
+          <div class="images one-album">
+            <div class="pic">
+              <i class="fa-solid fa-plus"></i>
+            </div>
+          </div>
+         
+        </div>
+          <div class="col-md-6">
+          <%= form.label :desc, "Description" %>
+          <%= text_area :album, :desc, size: "55x3",class: "form-control" %>
+          </div>
+    </div>
+      <div class="form-inline">
+        <%= form.submit "Save", class: "btn btn-success ml-4" %>
+        <button class="btn btn-danger ml-5 mb-3">Delete</button>
+    </div>
+  <% end %>
+</div>

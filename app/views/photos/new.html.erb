@@ -1,0 +1,28 @@
+<div class="container-index my-photos">
+  <h4>New photo</h4>
+  <hr>
+  <%= form_with url: photos_path, method: :post,multipart: true,html: {id: "form-add-photos"} do |form| %>
+    <div class="row new-photo" >
+        <div class="col-md-6">
+          <%= form.label :title, "Title" %>
+          <%= text_field(:photo, :title, class: "form-control",placeholder: "Photo title",autofocus: true )  %>
+          <%= form.label :state,"Sharing mode" %>
+          <%= form.select :state, ["public", "private"],{},{class: "form-control"} %>
+
+      
+          <!--- # <%= file_field(:photo, :file, accept: 'image/png')%> -->
+          <div class="images one-photo">
+            <div class="pic">
+              <i class="fa-solid fa-plus"></i>
+            </div>
+          </div>
+
+        </div>
+          <div class="col-md-6">
+            <%= form.label :desc, "Description" %>
+            <%= text_area :photo,:desc, size: "55x3",class: "form-control" %>
+          </div>
+    </div>
+  <%= form.submit "Save", class: "btn btn-success ml-4" %>
+  <% end %>
+</div>

@@ -1,0 +1,41 @@
+<div class="container-index my-photos">
+  <div class="btn-add-photo">
+    <button type="button" class="btn btn-success">               
+      <%=link_to "Add new photo", new_photo_path%>
+    </button>
+  </div>
+  <hr>
+  <div class="row">
+    <%if @photos %>
+      <% @photos.each do |p|%>
+        <div class="col-sm-6 com-md-6 col-lg-3">
+          <div class="attach-icon">
+            <%=link_to edit_photo_path(p.id) do%>
+              <div class="box-edit-photo">
+                <p>
+                  <%= p.title%>
+                </p>
+                <i class="fa-solid fa-pen-to-square"></i>
+              </div>
+            <%end%>
+           <%= image_tag("#{p.image.url}", id: "photo-#{p.id}",onclick: "showModalPhoto(this)",data: {toggle:"modal", target:"#myModalPhoto"}) %>
+            <% if p.state == "private"%>
+              <i class="fa-solid fa-lock"></i>
+            <%end%>
+          </div>
+        </div>
+      <%end%>
+    <%end%>
+  </div>
+    <%if @photos %>
+      <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+      </ul>
+    </nav>
+    <%end%>
+</div>

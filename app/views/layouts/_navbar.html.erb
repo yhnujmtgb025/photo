@@ -1,0 +1,44 @@
+    <div id="nav">
+      <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: #3C5999;display:fixed" >
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo03" style="z-index:9999">
+          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active ml-5">
+              <a href="/" class="navbar-brand"> FotoBook</a>
+            </li>
+
+            <form class="form-inline my-2 my-lg-0">
+              <input style="width:450px" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+              <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
+            </form>
+          </ul>
+          
+          <div class="form-inline nav-left-info">
+            <div class="img_name_user" >
+              <% if  user_signed_in? %>
+                <%= link_to do %>
+                  <%= image_tag("default.png") %>
+                  <span class="navbar-text">
+                    <%= current_user.first_name%>
+                  </span>
+                <%end%>
+              <%end%>
+            </div>
+
+            <% if user_signed_in? %>
+               <a> <%= button_to "Logout",destroy_user_session_path,method: :delete ,class: "navbar-text test" %>  </a>
+            <%else%>
+              <%= link_to new_user_session_path do %>
+                <span class="navbar-text">
+                    Login
+                </span>
+              <%end%>
+            <%end%>
+          </div>
+        </div>
+
+      </nav>
+    </div>

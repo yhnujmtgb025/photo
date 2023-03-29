@@ -1,0 +1,11 @@
+  <div class=" my-option">
+      <% if  user_signed_in? && current_user.role == 0 && current_user.active == true %>
+        <h6><%=link_to "Feeds", root_path %></h6>
+        <h6><%=link_to "My Photos", photos_path %><h6>
+        <h6><%=link_to "My Albums", albums_path %><h6>
+      <% elsif user_signed_in? && current_user == 1 && current_user.active == true %>
+        <h6><%=link_to "Manage Photos"%></h6>
+        <h6><%=link_to "Manage Albums" %><h6>
+        <h6><%=link_to "Manage Users" %><h6>
+      <%end%>
+    </div>

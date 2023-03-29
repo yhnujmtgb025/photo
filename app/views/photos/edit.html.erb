@@ -1,0 +1,34 @@
+<div class="container-index my-photos edit-photo">
+  <h4>Edit photo</h4>
+  <hr>
+  <%= form_with url:photo_path, method: :patch,multipart: true, html: {id: "form-edit-photos"}  do |form| %>
+    <div class="row new-photo" >
+        <div class="col-md-6">
+          <%= form.label :title, "Title" %>
+          <%= text_field(:photo, :title,class: "form-control",placeholder: "Photo title",autofocus: true )  do %>
+              <%= @photo.title%>
+          <%end%>
+          <%= form.label :state,"Sharing mode" %>
+
+          <%= form.select :state, [["public","public"],["private","private"]],{selected: @photo.state },{class: "form-control"} %>
+
+
+          <div class="images one-photo">
+            <div class="pic">
+              <i class="fa-solid fa-plus"></i>
+            </div>
+          </div>
+         
+        </div>
+        <div class="col-md-6">
+        <%= form.label :desc, "Description" %>
+        <%= form.text_area :desc, size: "55x3",class: "form-control", value: @photo.desc %>
+        </div>
+    </div>
+    <div class="form-inline">
+      <%= form.submit "Save", class: "btn btn-success ml-4" %>
+      <%# <button class="btn btn-danger ml-5 mb-3">Delete</button> %>
+    </div>
+   
+  <% end %>
+</div>
